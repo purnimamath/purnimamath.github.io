@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /writings/
-title: writings
+title: Writings
 description: writings from my mathematical and literary journey
 years: [1967, 1956, 1950, 1935, 1905]
 nav: true
