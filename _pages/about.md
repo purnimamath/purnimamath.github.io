@@ -2,7 +2,7 @@
 layout: about
 title: Home
 permalink: /
-subtitle: Email to <a href="mailto:purnima162.21@gmail.com>purnima162.21@gmail.com</a>
+subtitle: <a href="mailto:purnima162.21@gmail.com">purnima162.21@gmail.com</a>.
 
 profile:
   align: right
