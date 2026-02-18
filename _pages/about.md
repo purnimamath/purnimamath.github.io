@@ -1,6 +1,6 @@
 ---
 layout: about
-title: Home
+title: home
 permalink: /
 subtitle: <a href="mailto:purnima162.21@gmail.com">purnima162.21@gmail.com</a>.
 
