@@ -19,3 +19,5 @@ I am currently a third-year undergraduate student in Mathematics at Kanpur. I am
 
 The motivation behind this webpage is to gather my notes, literary writings, and other helpful resources.
 My blog can be accessed <a href="https://purnimamath.blogspot.com/">here</a>.
+
+This website is a _work in progress_.
