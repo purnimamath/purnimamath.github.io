@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minimal Academic Homepage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root,
+    [data-theme="light"] {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(0.95rem, 0.92rem + 0.18vw, 1.02rem);
+      --text-lg: clamp(1.05rem, 1rem + 0.45vw, 1.2rem);
+      --text-xl: clamp(1.6rem, 1.2rem + 1.5vw, 2.5rem);
+      --text-2xl: clamp(2.4rem, 1.8rem + 2.2vw, 4rem);
+
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+      --space-24: 6rem;
+
+      --color-bg: #fcfbfa;
+      --color-surface: #ffffff;
+      --color-border: #e5dfeb;
+      --color-divider: #d8c7e3;
+      --color-text: #1b1b1f;
+      --color-text-muted: #5f5a66;
+      --color-primary: #bb3fcf;
+      --color-primary-soft: #f4e7f8;
+      --color-text-inverse: #ffffff;
+      --shadow-md: 0 10px 28px rgba(49, 22, 56, 0.12);
+      --radius-lg: 1rem;
+      --radius-xl: 1.25rem;
+      --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      --font-display: 'Outfit', 'Inter', sans-serif;
+      --font-body: 'Manrope', 'Inter', sans-serif;
+      --content-wide: 1020px;
+    }
+
+    [data-theme="dark"] {
+      --color-bg: #121114;
+      --color-surface: #19171d;
+      --color-border: #342d39;
+      --color-divider: #5d3b69;
+      --color-text: #f4f1f6;
+      --color-text-muted: #beb6c4;
+      --color-primary: #d96ce8;
+      --color-primary-soft: #271d2d;
+      --color-text-inverse: #120f14;
+      --shadow-md: 0 12px 30px rgba(0,0,0,0.35);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      html:not([data-theme]) {
+        --color-bg: #121114;
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: 1.65;
+      color: var(--color-text);
+      background: var(--color-bg);
+    }
+
+    a {
+      color: blueviolet;
+      text-decoration: none;
+      transition: color var(--transition), opacity var(--transition);
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: auto;
+    }
+    .skip-link:focus {
+      left: var(--space-4);
+      top: var(--space-4);
+      background: var(--color-surface);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-lg);
+      z-index: 20;
+    }
+
+    .container {
+      width: min(calc(100% - 5rem), var(--content-wide));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      border-bottom: 1px solid var(--color-border);
+      background: color-mix(in srgb, var(--color-bg) 92%, white 8%);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--space-6);
+      min-height: 5.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      font-size: var(--text-sm);
+    }
+
+    .nav-links a.active {
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .theme-toggle {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text);
+      background: var(--color-surface);
+      cursor: pointer;
+    }
+
+    .top-accent {
+      border-top: 2px solid var(--color-primary);
+    }
+
+    main {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(240px, 330px);
+      gap: clamp(var(--space-8), 4vw, var(--space-16));
+      align-items: center;
+      padding: clamp(var(--space-12), 8vw, 7rem) 0 clamp(var(--space-16), 8vw, 8rem);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: var(--space-4);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    h1 {
+      margin: 0 0 var(--space-4);
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      font-weight: 300;
+    }
+
+    h1 strong {
+      font-weight: 800;
+    }
+
+    .email {
+      display: inline-block;
+      margin-bottom: var(--space-8);
+      color: var(--color-primary);
+      font-size: var(--text-lg);
+      word-break: break-word;
+    }
+
+    .intro p {
+      max-width: 31rem;
+      margin: 0 0 var(--space-8);
+      font-size: clamp(0.98rem, 0.95rem + 0.18vw, 1.08rem);
+      line-height: 1.72;
+    }
+
+    .intro a.inline-link {
+      color: var(--color-primary);
+    }
+
+    .portrait-card {
+  justify-self: end;
+  width: 100%;
+  max-width: 330px;
+  aspect-ratio: 4 / 4.5;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
+  background: none;
+  position: relative;
+}
+
+.portrait-card::before,
+.portrait-card::after {
+  content: none;
+}
+
+.portrait-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+    .footer {
+      padding: var(--space-10) 0 var(--space-16);
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: var(--color-primary);
+    }
+
+    .theme-toggle:hover,
+    .theme-toggle:focus-visible {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      outline: none;
+    }
+
+    @media (max-width: 860px) {
+      .container {
+        width: min(calc(100% - 2rem), var(--content-wide));
+      }
+
+      .nav {
+        justify-content: space-between;
+        min-height: 4.75rem;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: var(--space-10);
+      }
+
+      .portrait-card {
+        justify-self: start;
+        max-width: min(100%, 320px);
+        order: 2;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        width: min(calc(100% - 1.5rem), var(--content-wide));
+      }
+
+      .nav-links {
+        gap: var(--space-4);
+      }
+
+      .intro p {
+        font-size: 0.98rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <nav class="nav-links" aria-label="Primary">
+        <a class="active" href="#">Home</a>
+        <a href="writings.html">Writings</a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </nav>
+    </div>
+    <div class="top-accent"></div>
+  </header>
+
+  <main id="content">
+    <section class="container hero" aria-labelledby="hero-title">
+      <div class="intro">
+        <!-- <span class="eyebrow">Personal website</span> -->
+        <h1 id="hero-title"><strong>Purnima Tiwari</strong></h1>
+        <a class="email" href="mailto:purnima162.21@gmail.com">purnima162.21@gmail.com</a>
+        <p>
+          I am currently a third-year undergraduate student in Mathematics at Kanpur. I am quite interested in Abstract Algebra, Category Theory, Representation Theory, and Homological Algebra.
+        </p>
+        <p>
+          The motivation behind this webpage is to gather my notes, literary writings, and other helpful resources. My blog can be accessed <a target="_blank" rel="noopener noreferrer" href="https://purnimamath.blogspot.com/">here</a>.
+        </p>
+
+        <p>
+         <span style="color:#7b223b;"> <strong>Anveshanā</strong></span> is a bi-annual magazine that spirits on the truth, beauty and inquiry, it is available <a href="https://anveshanamagazine.github.io/"> here</a> to read.
+        </p>
+      </div>
+
+      <aside class="portrait-card">
+  <img src="prof_pic.jpg" alt="Profile portrait of Purnima Tiwari" class="portrait-image">
+</aside>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© Copyright 2026 Purnima Tiwari.</div>
+  </footer>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const toggle = document.querySelector('[data-theme-toggle]');
+      let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      root.setAttribute('data-theme', theme);
+
+      const renderIcon = () => {
+        toggle.innerHTML = theme === 'dark'
+          ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>'
+          : '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+        toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      };
+
+      renderIcon();
+      toggle.addEventListener('click', function () {
+        theme = theme === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', theme);
+        renderIcon();
+      });
+    })();
+  </script>
+</body>
+</html>
